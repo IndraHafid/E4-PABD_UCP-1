@@ -13,7 +13,7 @@ namespace Tugasucp1
 {
     public partial class Form1 : Form
     {
-        private string connectionString = "Data source=LAPTOP-HV1LJOCH\\HAFIDZ;Initial Catalog=DonasiBarangBekas;Integrated Security=True";
+        private string connectionString = "Data source=DESKTOP-IPMTL32;Initial Catalog=DonasiBarangBekas;Integrated Security=True";
         public Form1()
         {
             InitializeComponent();
@@ -24,7 +24,7 @@ namespace Tugasucp1
             string username = txtNamaAdmin.Text.Trim();
             string passwd = txtPasswd.Text.Trim();
 
-            if (username == "" || passwd == "")
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(passwd))
             {
                 MessageBox.Show("Username dan Password tidak boleh kosong!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -35,7 +35,7 @@ namespace Tugasucp1
                 try
                 {
                     conn.Open();
-                    string query = "SELECT COUNT(*) FROM Users WHERE username = @username AND Passwd = @passwd";
+                    string query = "SELECT COUNT(*) FROM Admin WHERE Username = @username AND Passwd = @passwd";
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@username", username);
@@ -46,7 +46,6 @@ namespace Tugasucp1
                         if (result > 0)
                         {
                             MessageBox.Show("Login berhasil!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            // TODO: Tampilkan form utama atau dashboard
                             this.Hide();
                             Form3 form3 = new Form3();
                             form3.Show();
@@ -62,7 +61,7 @@ namespace Tugasucp1
                     MessageBox.Show("Terjadi kesalahan: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-
         }
+
     }
 }

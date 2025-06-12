@@ -13,7 +13,7 @@ namespace Tugasucp1
 {
     public partial class Form6 : Form
     {
-        private string connectionString = "Data source=LAPTOP-HV1LJOCH\\HAFIDZ;Initial Catalog=DonasiBarangBekas;Integrated Security=True";
+        private string connectionString = "Data source=DESKTOP-IPMTL32;Initial Catalog=DonasiBarangBekas;Integrated Security=True";
         public Form6()
         {
             InitializeComponent();
@@ -31,8 +31,7 @@ namespace Tugasucp1
                 {
                     conn.Open();
                     string query = @"SELECT ID_Penerima AS [ID Penerima], Nama_Penerima AS [Nama Penerima], 
-                                    Alamat AS [Alamat], NoTelp AS [NoTelp], 
-                                    Jumlah FROM Penerima";
+                            Alamat AS [Alamat], NoTelp AS [No Telp] FROM Penerima";
                     SqlDataAdapter da = new SqlDataAdapter(query, conn);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
@@ -66,12 +65,15 @@ namespace Tugasucp1
                 return;
             }
 
+            DialogResult result = MessageBox.Show("Yakin ingin menambahkan data penerima ini?", "Konfirmasi Tambah", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.No) return;
+
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 try
                 {
                     conn.Open();
-                    string query = "INSERT INTO Donasi (ID_Penerima, Nama_Penerima, Alamat, NoTelp) VALUES (@ID_Penerima, @Nama, @Alamat, @NoTelp)";
+                    string query = "INSERT INTO Penerima (ID_Penerima, Nama_Penerima, Alamat, NoTelp) VALUES (@ID, @Nama, @Alamat, @NoTelp)";
                     SqlCommand cmd = new SqlCommand(query, conn);
 
                     cmd.Parameters.AddWithValue("@ID", txtIDPenerima.Text.Trim());
@@ -83,7 +85,7 @@ namespace Tugasucp1
 
                     if (rowsAffected > 0)
                     {
-                        MessageBox.Show("Data Donasi berhasil ditambahkan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Data Penerima berhasil ditambahkan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         ClearForm();
                         LoadData();
                     }
@@ -99,46 +101,60 @@ namespace Tugasucp1
             }
         }
 
+
+
         private void btnUbah_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtIDPenerima.Text))
+            if (string.IsNullOrWhiteSpace(txtIDPenerima.Text) ||
+                string.IsNullOrWhiteSpace(txtNama.Text) ||
+                string.IsNullOrWhiteSpace(txtAlamat.Text) ||
+                string.IsNullOrWhiteSpace(txtNoTelp.Text))
             {
-                MessageBox.Show("Isi ID Donasi terlebih dahulu.");
+                MessageBox.Show("Harap isi semua data.", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            DialogResult result = MessageBox.Show("Yakin ingin mengubah data penerima ini?", "Konfirmasi Ubah", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.No) return;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 try
                 {
-                    string query = "UPDATE Donasi SET ID_Penerima=@ID_Penerima, Nama_Penerima=@Nama, Alamat=@Alamat, NoTelp=@NoTelp WHERE ID_Penerima=@ID_Penerima";
-                    SqlCommand cmd = new SqlCommand(query, conn);
-
-                    cmd.Parameters.AddWithValue("@ID_Penerima", txtIDPenerima.Text);
-                    cmd.Parameters.AddWithValue("@Donatur", txtNama.Text);
-                    cmd.Parameters.AddWithValue("@Jenis", txtAlamat.Text);
-                    cmd.Parameters.AddWithValue("@Jumlah", txtNoTelp.Text);
-
                     conn.Open();
-                    int result = cmd.ExecuteNonQuery();
+                    string query = "UPDATE Penerima SET Nama_Penerima = @Nama, Alamat = @Alamat, NoTelp = @NoTelp WHERE ID_Penerima = @ID";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", txtIDPenerima.Text.Trim());
+                        cmd.Parameters.AddWithValue("@Nama", txtNama.Text.Trim());
+                        cmd.Parameters.AddWithValue("@Alamat", txtAlamat.Text.Trim());
+                        cmd.Parameters.AddWithValue("@NoTelp", txtNoTelp.Text.Trim());
 
-                    if (result > 0)
-                    {
-                        MessageBox.Show("Data Donasi berhasil diubah.");
-                        LoadData();
-                        ClearForm();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Data tidak ditemukan.");
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Data Penerima berhasil diubah!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            LoadData();
+                            ClearForm();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Data tidak ditemukan atau gagal diubah!", "Gagal", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Kesalahan: " + ex.Message);
+                    MessageBox.Show("Kesalahan: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
+
+
+
+
+
 
 
         private void btnHapus_Click(object sender, EventArgs e)
@@ -152,13 +168,13 @@ namespace Tugasucp1
                     {
                         try
                         {
-                            string id = dgvPenerima.SelectedRows[0].Cells["ID_Penerima"].Value.ToString();
-                            string query = "DELETE FROM Donasi WHERE ID_Penerima = @ID_Penerima";
+                            string id = dgvPenerima.SelectedRows[0].Cells["ID Penerima"].Value.ToString();
+                            string query = "DELETE FROM Penerima WHERE ID_Penerima = @ID";
 
                             using (SqlCommand cmd = new SqlCommand(query, conn))
                             {
                                 conn.Open();
-                                cmd.Parameters.AddWithValue("@ID_Penerima", id);
+                                cmd.Parameters.AddWithValue("@ID", id);
                                 int rowsAffected = cmd.ExecuteNonQuery();
 
                                 if (rowsAffected > 0)
@@ -185,5 +201,34 @@ namespace Tugasucp1
                 MessageBox.Show("Pilih data yang akan dihapus!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+
+        private void btnBACK_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form3 form3 = new Form3();
+            form3.Show();
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            LoadData();
+            MessageBox.Show("Data berhasil direfresh.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void dgvPenerima_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dgvPenerima.Rows[e.RowIndex];
+
+                txtIDPenerima.Text = row.Cells["ID Penerima"].Value?.ToString();
+                txtNama.Text = row.Cells["Nama Penerima"].Value?.ToString();
+                txtAlamat.Text = row.Cells["Alamat"].Value?.ToString();
+                txtNoTelp.Text = row.Cells["No Telp"].Value?.ToString(); // Ini diperbaiki!
+            }
+        }
+
+
     }
 }

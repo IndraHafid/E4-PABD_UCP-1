@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Tugasucp1
 {
     public partial class Form5 : Form
     {
-        private string connectionString = "Data source=LAPTOP-HV1LJOCH\\HAFIDZ;Initial Catalog=DonasiBarangBekas;Integrated Security=True";
+        private string connectionString = "Data source=DESKTOP-IPMTL32;Initial Catalog=DonasiBarangBekas;Integrated Security=True";
+
         public Form5()
         {
             InitializeComponent();
@@ -30,17 +25,13 @@ namespace Tugasucp1
             txtIDDonasi.Clear();
             txtIDDonatur.Clear();
             txtIDPenerima.Clear();
-            txtTglPengiriman.Value = DateTime.Now; 
-            txtTglDiterima.Value = DateTime.Now;
+            dtpPengiriman.Value = DateTime.Now;
+            dtpDiterima.Value = DateTime.Now;
             txtStatus.Clear();
             txtCocokBarang.Clear();
             txtIDPengiriman.Focus();
         }
 
-        private void Pengiriman_Donasi_Click(object sender, EventArgs e)
-        {
-
-        }
         private void LoadData()
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -48,65 +39,57 @@ namespace Tugasucp1
                 try
                 {
                     conn.Open();
-                    string query = @"SELECT ID_Pengiriman AS [ID Pengiriman], ID_Donasi AS [ID Donasi], ID_Donatur AS [ID_Donatur], ID_Penerima AS [ID_Penerima],
-                                    Tanggal_Kirim AS [Tanggal Kirim], Tanggal_Terima AS [Tanggal_Terima], 
-                                    Status_Pengiriman AS [Status Pengiriman], Kecocokan_Barang AS [Kecocokan Barang] FROM PengirimanDonasi";
-                    SqlDataAdapter da = new SqlDataAdapter(query, conn);
+                    SqlCommand cmd = new SqlCommand("sp_GetAllPengirimanDonasi", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
-
-                    dgvPengiriman.AutoGenerateColumns = true;
                     dgvPengiriman.DataSource = dt;
-
+                    dgvPengiriman.Refresh();
                     ClearForm();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message, "Kesalahan", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Error: " + ex.Message);
                 }
             }
         }
 
         private void btnTambah_Click(object sender, EventArgs e)
         {
-            if (txtIDPengiriman.Text == "" || txtIDDonasi.Text == "" || txtIDDonatur.Text == "" ||
-                txtIDPenerima.Text == "" || txtTanggalKirim.Text == "" || txtTanggalTerima.Text == "" ||
-                txtStatus.Text == "" || txtCocokBarang.Text == "")
+            // Validasi kolom kosong
+            if (string.IsNullOrWhiteSpace(txtIDPengiriman.Text) ||
+                string.IsNullOrWhiteSpace(txtIDDonasi.Text) ||
+                string.IsNullOrWhiteSpace(txtIDDonatur.Text) ||
+                string.IsNullOrWhiteSpace(txtIDPenerima.Text) ||
+                string.IsNullOrWhiteSpace(txtStatus.Text) ||
+                string.IsNullOrWhiteSpace(txtCocokBarang.Text))
             {
-                MessageBox.Show("Harap isi semua data!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Semua field harus diisi!", "Validasi Gagal", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            DialogResult result = MessageBox.Show("Yakin ingin menambahkan data ini?", "Konfirmasi Tambah", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.No) return;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 try
                 {
                     conn.Open();
-                    string query = @"INSERT INTO PengirimanDonasi 
-                                    (ID_Pengiriman, ID_Donasi, ID_Donatur, ID_Penerima, 
-                                     Tanggal_Kirim, Tanggal_Terima, Status_Kirim, Cocok_Barang) 
-                                     VALUES 
-                                    (@ID, @Donasi, @Donatur, @Penerima, @TglKirim, @TglTerima, @Status, @Cocok)";
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@ID", txtIDPengiriman.Text.Trim());
-                    cmd.Parameters.AddWithValue("@Donasi", txtIDDonasi.Text.Trim());
-                    cmd.Parameters.AddWithValue("@Donatur", txtIDDonatur.Text.Trim());
-                    cmd.Parameters.AddWithValue("@Penerima", txtIDPenerima.Text.Trim());
-                    cmd.Parameters.AddWithValue("@TglKirim", txtTglPengiriman.Value);
-                    cmd.Parameters.AddWithValue("@TglTerima", txtTglDiterima.Value);
-                    cmd.Parameters.AddWithValue("@Status", txtStatus.Text.Trim());
-                    cmd.Parameters.AddWithValue("@Cocok", txtCocokBarang.Text.Trim());
-
-                    int rowsAffected = cmd.ExecuteNonQuery();
-                    if (rowsAffected > 0)
-                    {
-                        MessageBox.Show("Data berhasil ditambahkan!");
-                        LoadData();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Gagal menambahkan data.");
-                    }
+                    SqlCommand cmd = new SqlCommand("sp_InsertPengirimanDonasi", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID_Pengiriman", txtIDPengiriman.Text);
+                    cmd.Parameters.AddWithValue("@ID_Donasi", txtIDDonasi.Text);
+                    cmd.Parameters.AddWithValue("@ID_Donatur", txtIDDonatur.Text);
+                    cmd.Parameters.AddWithValue("@ID_Penerima", txtIDPenerima.Text);
+                    cmd.Parameters.AddWithValue("@Tanggal_Pengiriman", dtpPengiriman.Value);
+                    cmd.Parameters.AddWithValue("@Tanggal_Diterima", dtpDiterima.Value);
+                    cmd.Parameters.AddWithValue("@Status_Pengiriman", txtStatus.Text);
+                    cmd.Parameters.AddWithValue("@Kecocokan_Barang", txtCocokBarang.Text);
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Data berhasil ditambahkan!");
+                    LoadData();
                 }
                 catch (Exception ex)
                 {
@@ -114,97 +97,115 @@ namespace Tugasucp1
                 }
             }
         }
+
+
         private void btnUbah_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtIDPengiriman.Text))
+            if (string.IsNullOrWhiteSpace(txtIDPengiriman.Text) ||
+             string.IsNullOrWhiteSpace(txtIDDonasi.Text) ||
+             string.IsNullOrWhiteSpace(txtIDDonatur.Text) ||
+             string.IsNullOrWhiteSpace(txtIDPenerima.Text) ||
+             string.IsNullOrWhiteSpace(txtStatus.Text) ||
+             string.IsNullOrWhiteSpace(txtCocokBarang.Text))
             {
-                MessageBox.Show("Isi ID Pengiriman terlebih dahulu!");
+                MessageBox.Show("Semua field harus diisi!", "Validasi Gagal", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            DialogResult result = MessageBox.Show("Yakin ingin mengubah data ini?", "Konfirmasi Ubah", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.No) return;
+
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 try
                 {
                     conn.Open();
-                    string query = @"UPDATE PengirimanDonasi SET 
-                                        ID_Donasi = @Donasi,
-                                        ID_Donatur = @Donatur,
-                                        ID_Penerima = @Penerima,
-                                        Tanggal_Kirim = @TglKirim,
-                                        Tanggal_Terima = @TglTerima,
-                                        Status_Kirim = @Status,
-                                        Cocok_Barang = @Cocok
-                                     WHERE ID_Pengiriman = @ID";
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@ID", txtIDPengiriman.Text);
-                    cmd.Parameters.AddWithValue("@Donasi", txtIDDonasi.Text);
-                    cmd.Parameters.AddWithValue("@Donatur", txtIDDonatur.Text);
-                    cmd.Parameters.AddWithValue("@Penerima", txtIDPenerima.Text);
-                    cmd.Parameters.AddWithValue("@TglKirim", txtTglPengiriman.Value); 
-                    cmd.Parameters.AddWithValue("@TglTerima", txtTglDiterima.Value);
-                    cmd.Parameters.AddWithValue("@Status", txtStatus.Text);
-                    cmd.Parameters.AddWithValue("@Cocok", txtCocokBarang.Text);
-
-                    int result = cmd.ExecuteNonQuery();
-                    if (result > 0)
-                    {
-                        MessageBox.Show("Data berhasil diubah!");
-                        LoadData();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Data tidak ditemukan!");
-                    }
+                    SqlCommand cmd = new SqlCommand("sp_UpdatePengirimanDonasi", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID_Pengiriman", txtIDPengiriman.Text);
+                    cmd.Parameters.AddWithValue("@ID_Donasi", txtIDDonasi.Text);
+                    cmd.Parameters.AddWithValue("@ID_Donatur", txtIDDonatur.Text);
+                    cmd.Parameters.AddWithValue("@ID_Penerima", txtIDPenerima.Text);
+                    cmd.Parameters.AddWithValue("@Tanggal_Pengiriman", dtpPengiriman.Value);
+                    cmd.Parameters.AddWithValue("@Tanggal_Diterima", dtpDiterima.Value);
+                    cmd.Parameters.AddWithValue("@Status_Pengiriman", txtStatus.Text);
+                    cmd.Parameters.AddWithValue("@Kecocokan_Barang", txtCocokBarang.Text);
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Data berhasil diubah!");
+                    LoadData();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Kesalahan: " + ex.Message);
                 }
             }
-
         }
+
         private void btnHapus_Click(object sender, EventArgs e)
         {
             if (dgvPengiriman.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Pilih baris data yang ingin dihapus!");
+                MessageBox.Show("Pilih data yang akan dihapus terlebih dahulu!");
                 return;
             }
 
-            DialogResult dialog = MessageBox.Show("Yakin ingin menghapus data ini?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (dialog == DialogResult.Yes)
-            {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    try
-                    {
-                        string id = dgvPengiriman.SelectedRows[0].Cells["ID_Pengiriman"].Value.ToString();
-                        conn.Open();
-                        string query = "DELETE FROM PengirimanDonasi WHERE ID_Pengiriman = @ID";
-                        SqlCommand cmd = new SqlCommand(query, conn);
-                        cmd.Parameters.AddWithValue("@ID", id);
+            DialogResult result = MessageBox.Show("Yakin ingin menghapus data ini?", "Konfirmasi Hapus", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.No) return;
 
-                        int rowsAffected = cmd.ExecuteNonQuery();
-                        if (rowsAffected > 0)
-                        {
-                            MessageBox.Show("Data berhasil dihapus!");
-                            LoadData();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Data tidak ditemukan.");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error: " + ex.Message);
-                    }
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    string id = dgvPengiriman.SelectedRows[0].Cells["ID_Pengiriman"].Value.ToString();
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("sp_DeletePengirimanDonasi", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID_Pengiriman", id);
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Data berhasil dihapus!");
+                    LoadData();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
                 }
             }
+        }
 
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            LoadData();
+            MessageBox.Show("Data berhasil direfresh.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
 
+        private void btnBACK_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form3 form3 = new Form3();
+            form3.Show();
+        }
 
+        private void dgvPengiriman_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dgvPengiriman.Rows[e.RowIndex];
+
+                txtIDPengiriman.Text = row.Cells["ID_Pengiriman"].Value?.ToString();
+                txtIDDonasi.Text = row.Cells["ID_Donasi"].Value?.ToString();
+                txtIDDonatur.Text = row.Cells["ID_Donatur"].Value?.ToString();
+                txtIDPenerima.Text = row.Cells["ID_Penerima"].Value?.ToString();
+
+                if (DateTime.TryParse(row.Cells["Tanggal_Pengiriman"].Value?.ToString(), out DateTime tglKirim))
+                    dtpPengiriman.Value = tglKirim;
+
+                if (DateTime.TryParse(row.Cells["Tanggal_Diterima"].Value?.ToString(), out DateTime tglTerima))
+                    dtpDiterima.Value = tglTerima;
+
+                txtStatus.Text = row.Cells["Status_Pengiriman"].Value?.ToString();
+                txtCocokBarang.Text = row.Cells["Kecocokan_Barang"].Value?.ToString();
+            }
         }
     }
 }

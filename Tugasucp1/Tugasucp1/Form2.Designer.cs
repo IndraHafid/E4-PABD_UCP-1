@@ -48,137 +48,152 @@
             // 
             // txtIDDonatur
             // 
-            this.txtIDDonatur.Location = new System.Drawing.Point(171, 79);
+            this.txtIDDonatur.Location = new System.Drawing.Point(192, 99);
+            this.txtIDDonatur.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtIDDonatur.Name = "txtIDDonatur";
-            this.txtIDDonatur.Size = new System.Drawing.Size(270, 22);
+            this.txtIDDonatur.Size = new System.Drawing.Size(303, 26);
             this.txtIDDonatur.TabIndex = 0;
             // 
             // txtNamaDonatur
             // 
-            this.txtNamaDonatur.Location = new System.Drawing.Point(171, 130);
+            this.txtNamaDonatur.Location = new System.Drawing.Point(192, 162);
+            this.txtNamaDonatur.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtNamaDonatur.Name = "txtNamaDonatur";
-            this.txtNamaDonatur.Size = new System.Drawing.Size(270, 22);
+            this.txtNamaDonatur.Size = new System.Drawing.Size(303, 26);
             this.txtNamaDonatur.TabIndex = 1;
             // 
             // txtAlamat
             // 
-            this.txtAlamat.Location = new System.Drawing.Point(171, 185);
+            this.txtAlamat.Location = new System.Drawing.Point(192, 231);
+            this.txtAlamat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtAlamat.Name = "txtAlamat";
-            this.txtAlamat.Size = new System.Drawing.Size(270, 22);
+            this.txtAlamat.Size = new System.Drawing.Size(303, 26);
             this.txtAlamat.TabIndex = 2;
             // 
             // txtNoTelp
             // 
-            this.txtNoTelp.Location = new System.Drawing.Point(171, 234);
+            this.txtNoTelp.Location = new System.Drawing.Point(192, 292);
+            this.txtNoTelp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtNoTelp.Name = "txtNoTelp";
-            this.txtNoTelp.Size = new System.Drawing.Size(270, 22);
+            this.txtNoTelp.Size = new System.Drawing.Size(303, 26);
             this.txtNoTelp.TabIndex = 3;
             // 
             // NamaDonatur
             // 
             this.NamaDonatur.AutoSize = true;
-            this.NamaDonatur.Location = new System.Drawing.Point(42, 136);
+            this.NamaDonatur.Location = new System.Drawing.Point(47, 170);
             this.NamaDonatur.Name = "NamaDonatur";
-            this.NamaDonatur.Size = new System.Drawing.Size(94, 16);
+            this.NamaDonatur.Size = new System.Drawing.Size(113, 20);
             this.NamaDonatur.TabIndex = 4;
             this.NamaDonatur.Text = "Nama Donatur";
             // 
             // IDDonatur
             // 
             this.IDDonatur.AutoSize = true;
-            this.IDDonatur.Location = new System.Drawing.Point(42, 85);
+            this.IDDonatur.Location = new System.Drawing.Point(47, 106);
             this.IDDonatur.Name = "IDDonatur";
-            this.IDDonatur.Size = new System.Drawing.Size(70, 16);
+            this.IDDonatur.Size = new System.Drawing.Size(86, 20);
             this.IDDonatur.TabIndex = 5;
             this.IDDonatur.Text = "lD Donatur";
             // 
             // Alamat
             // 
             this.Alamat.AutoSize = true;
-            this.Alamat.Location = new System.Drawing.Point(42, 188);
+            this.Alamat.Location = new System.Drawing.Point(47, 235);
             this.Alamat.Name = "Alamat";
-            this.Alamat.Size = new System.Drawing.Size(49, 16);
+            this.Alamat.Size = new System.Drawing.Size(59, 20);
             this.Alamat.TabIndex = 6;
             this.Alamat.Text = "Alamat";
             // 
             // NoTelp
             // 
             this.NoTelp.AutoSize = true;
-            this.NoTelp.Location = new System.Drawing.Point(42, 240);
+            this.NoTelp.Location = new System.Drawing.Point(47, 300);
             this.NoTelp.Name = "NoTelp";
-            this.NoTelp.Size = new System.Drawing.Size(79, 16);
+            this.NoTelp.Size = new System.Drawing.Size(90, 20);
             this.NoTelp.TabIndex = 7;
             this.NoTelp.Text = "No Telepon";
             // 
             // dgvDonatur
             // 
             this.dgvDonatur.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDonatur.Location = new System.Drawing.Point(45, 278);
+            this.dgvDonatur.Location = new System.Drawing.Point(51, 348);
+            this.dgvDonatur.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dgvDonatur.Name = "dgvDonatur";
             this.dgvDonatur.RowHeadersWidth = 51;
             this.dgvDonatur.RowTemplate.Height = 24;
-            this.dgvDonatur.Size = new System.Drawing.Size(400, 150);
+            this.dgvDonatur.Size = new System.Drawing.Size(450, 188);
             this.dgvDonatur.TabIndex = 8;
             // 
             // Donatur
             // 
             this.Donatur.AutoSize = true;
-            this.Donatur.Location = new System.Drawing.Point(292, 39);
+            this.Donatur.Location = new System.Drawing.Point(328, 49);
             this.Donatur.Name = "Donatur";
-            this.Donatur.Size = new System.Drawing.Size(54, 16);
+            this.Donatur.Size = new System.Drawing.Size(67, 20);
             this.Donatur.TabIndex = 9;
             this.Donatur.Text = "Donatur";
             // 
             // btnTambah
             // 
-            this.btnTambah.Location = new System.Drawing.Point(589, 78);
+            this.btnTambah.Location = new System.Drawing.Point(663, 98);
+            this.btnTambah.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnTambah.Name = "btnTambah";
-            this.btnTambah.Size = new System.Drawing.Size(75, 23);
+            this.btnTambah.Size = new System.Drawing.Size(84, 29);
             this.btnTambah.TabIndex = 10;
             this.btnTambah.Text = "Add";
             this.btnTambah.UseVisualStyleBackColor = true;
+            this.btnTambah.Click += new System.EventHandler(this.btnTambah_Click);
             // 
             // btnUpdate
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(589, 116);
+            this.btnUpdate.Location = new System.Drawing.Point(663, 145);
+            this.btnUpdate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(75, 23);
+            this.btnUpdate.Size = new System.Drawing.Size(84, 29);
             this.btnUpdate.TabIndex = 11;
             this.btnUpdate.Text = "Update";
             this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUbah_Click);
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(589, 156);
+            this.btnDelete.Location = new System.Drawing.Point(663, 195);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.Size = new System.Drawing.Size(84, 29);
             this.btnDelete.TabIndex = 12;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnHapus_Click);
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(589, 198);
+            this.btnRefresh.Location = new System.Drawing.Point(663, 248);
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(75, 23);
+            this.btnRefresh.Size = new System.Drawing.Size(84, 29);
             this.btnRefresh.TabIndex = 13;
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_click);
             // 
             // btnBACK
             // 
-            this.btnBACK.Location = new System.Drawing.Point(589, 260);
+            this.btnBACK.Location = new System.Drawing.Point(663, 325);
+            this.btnBACK.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnBACK.Name = "btnBACK";
-            this.btnBACK.Size = new System.Drawing.Size(75, 23);
+            this.btnBACK.Size = new System.Drawing.Size(84, 29);
             this.btnBACK.TabIndex = 14;
             this.btnBACK.Text = "BACK";
             this.btnBACK.UseVisualStyleBackColor = true;
+            this.btnBACK.Click += new System.EventHandler(this.btnBACK_Click);
             // 
             // Form2
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(900, 562);
             this.Controls.Add(this.btnBACK);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.btnDelete);
@@ -194,6 +209,7 @@
             this.Controls.Add(this.txtAlamat);
             this.Controls.Add(this.txtNamaDonatur);
             this.Controls.Add(this.txtIDDonatur);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Form2";
             this.Text = "Form2";
             ((System.ComponentModel.ISupportInitialize)(this.dgvDonatur)).EndInit();
