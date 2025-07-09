@@ -1,0 +1,17 @@
+C:\Users\HP\Documents\SEMESTER 4\PABD\ucp\E4-PABD_UCP-1\Tugasucp1\Tugasucp1\bin\Release\Tugasucp1.exe.config
+C:\Users\HP\Documents\SEMESTER 4\PABD\ucp\E4-PABD_UCP-1\Tugasucp1\Tugasucp1\bin\Release\Tugasucp1.exe
+C:\Users\HP\Documents\SEMESTER 4\PABD\ucp\E4-PABD_UCP-1\Tugasucp1\Tugasucp1\bin\Release\Tugasucp1.pdb
+C:\Users\HP\Documents\SEMESTER 4\PABD\ucp\E4-PABD_UCP-1\Tugasucp1\Tugasucp1\obj\Release\Tugasucp1.csproj.AssemblyReference.cache
+C:\Users\HP\Documents\SEMESTER 4\PABD\ucp\E4-PABD_UCP-1\Tugasucp1\Tugasucp1\obj\Release\Tugasucp1.Form1.resources
+C:\Users\HP\Documents\SEMESTER 4\PABD\ucp\E4-PABD_UCP-1\Tugasucp1\Tugasucp1\obj\Release\Tugasucp1.Form2.resources
+C:\Users\HP\Documents\SEMESTER 4\PABD\ucp\E4-PABD_UCP-1\Tugasucp1\Tugasucp1\obj\Release\Tugasucp1.Form3.resources
+C:\Users\HP\Documents\SEMESTER 4\PABD\ucp\E4-PABD_UCP-1\Tugasucp1\Tugasucp1\obj\Release\Tugasucp1.Form4.resources
+C:\Users\HP\Documents\SEMESTER 4\PABD\ucp\E4-PABD_UCP-1\Tugasucp1\Tugasucp1\obj\Release\Tugasucp1.Form5.resources
+C:\Users\HP\Documents\SEMESTER 4\PABD\ucp\E4-PABD_UCP-1\Tugasucp1\Tugasucp1\obj\Release\Tugasucp1.Form6.resources
+C:\Users\HP\Documents\SEMESTER 4\PABD\ucp\E4-PABD_UCP-1\Tugasucp1\Tugasucp1\obj\Release\Tugasucp1.Form7.resources
+C:\Users\HP\Documents\SEMESTER 4\PABD\ucp\E4-PABD_UCP-1\Tugasucp1\Tugasucp1\obj\Release\Tugasucp1.Form8.resources
+C:\Users\HP\Documents\SEMESTER 4\PABD\ucp\E4-PABD_UCP-1\Tugasucp1\Tugasucp1\obj\Release\Tugasucp1.Properties.Resources.resources
+C:\Users\HP\Documents\SEMESTER 4\PABD\ucp\E4-PABD_UCP-1\Tugasucp1\Tugasucp1\obj\Release\Tugasucp1.csproj.GenerateResource.cache
+C:\Users\HP\Documents\SEMESTER 4\PABD\ucp\E4-PABD_UCP-1\Tugasucp1\Tugasucp1\obj\Release\Tugasucp1.csproj.CoreCompileInputs.cache
+C:\Users\HP\Documents\SEMESTER 4\PABD\ucp\E4-PABD_UCP-1\Tugasucp1\Tugasucp1\obj\Release\Tugasucp1.exe
+C:\Users\HP\Documents\SEMESTER 4\PABD\ucp\E4-PABD_UCP-1\Tugasucp1\Tugasucp1\obj\Release\Tugasucp1.pdb
